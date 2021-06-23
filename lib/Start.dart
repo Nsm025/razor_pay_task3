@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
+
 import 'package:authentification/Login.dart';
-import 'SignUp.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:authentification/Signup.dart';
 
 class Start extends StatefulWidget {
   @override
@@ -11,38 +10,16 @@ class Start extends StatefulWidget {
 }
 
 class _StartState extends State<Start> {
+  // ignore: unused_field
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<UserCredential> googleSignIn() async {
-    GoogleSignIn googleSignIn = GoogleSignIn();
-    GoogleSignInAccount googleUser = await googleSignIn.signIn();
-    if (googleUser != null) {
-      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  // navigateToLogin() async {
+  //   Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+  // }
 
-      if (googleAuth.idToken != null && googleAuth.accessToken != null) {
-        final AuthCredential credential = GoogleAuthProvider.credential(
-            accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-
-        final UserCredential user =
-            await _auth.signInWithCredential(credential);
-
-        await Navigator.pushReplacementNamed(context, "/");
-
-        return user;
-      } else {
-        throw StateError('Missing Google Auth Token');
-      }
-    } else
-      throw StateError('Sign in Aborted');
-  }
-
-  navigateToLogin() async {
-    Navigator.pushReplacementNamed(context, "Login");
-  }
-
-  navigateToRegister() async {
-    Navigator.pushReplacementNamed(context, "SignUp");
-  }
+  // navigateToRegister() async {
+  //   Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +45,7 @@ class _StartState extends State<Start> {
                         color: Colors.black),
                     children: <TextSpan>[
                   TextSpan(
-                      text: 'X Groceries',
+                      text: 'Task 3',
                       style: TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
@@ -76,16 +53,20 @@ class _StartState extends State<Start> {
                 ])),
             SizedBox(height: 10.0),
             Text(
-              'Fresh Groceries Delivered at your Doorstep',
+              'Click any button to continue',
               style: TextStyle(color: Colors.black),
             ),
             SizedBox(height: 30.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                // ignore: deprecated_member_use
                 RaisedButton(
                     padding: EdgeInsets.only(left: 30, right: 30),
-                    onPressed: navigateToLogin,
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login()));
+                    },
                     child: Text(
                       'LOGIN',
                       style: TextStyle(
@@ -99,9 +80,13 @@ class _StartState extends State<Start> {
                     ),
                     color: Colors.orange),
                 SizedBox(width: 20.0),
+                // ignore: deprecated_member_use
                 RaisedButton(
                     padding: EdgeInsets.only(left: 30, right: 30),
-                    onPressed: navigateToRegister,
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SignUp()));
+                    },
                     child: Text(
                       'REGISTER',
                       style: TextStyle(
@@ -116,9 +101,6 @@ class _StartState extends State<Start> {
                     color: Colors.orange),
               ],
             ),
-            SizedBox(height: 20.0),
-            SignInButton(Buttons.Google,
-                text: "Sign up with Google", onPressed: googleSignIn)
           ],
         ),
       ),

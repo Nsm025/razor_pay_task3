@@ -1,3 +1,4 @@
+import 'package:authentification/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'SignUp.dart';
@@ -16,14 +17,14 @@ class _LoginState extends State<Login> {
   checkAuthentification() async {
     _auth.authStateChanges().listen((user) {
       if (user != null) {
-        print(user);
-
-        Navigator.pushReplacementNamed(context, "/");
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     });
   }
 
   @override
+  // ignore: unused_element
   void initState() {
     super.initState();
     this.checkAuthentification();
@@ -51,6 +52,7 @@ class _LoginState extends State<Login> {
             title: Text('ERROR'),
             content: Text(errormessage),
             actions: <Widget>[
+              // ignore: deprecated_member_use
               FlatButton(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -61,9 +63,9 @@ class _LoginState extends State<Login> {
         });
   }
 
-  navigateToSignUp() async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
-  }
+  // navigateToSignUp() async {
+  //   Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +88,7 @@ class _LoginState extends State<Login> {
                   children: <Widget>[
                     Container(
                       child: TextFormField(
+                          // ignore: missing_return
                           validator: (input) {
                             if (input.isEmpty) return 'Enter Email';
                           },
@@ -96,6 +99,7 @@ class _LoginState extends State<Login> {
                     ),
                     Container(
                       child: TextFormField(
+                          // ignore: missing_return
                           validator: (input) {
                             if (input.length < 6)
                               return 'Provide Minimum 6 Character';
@@ -108,6 +112,7 @@ class _LoginState extends State<Login> {
                           onSaved: (input) => _password = input),
                     ),
                     SizedBox(height: 20),
+                    // ignore: deprecated_member_use
                     RaisedButton(
                       padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
                       onPressed: login,
@@ -127,8 +132,11 @@ class _LoginState extends State<Login> {
             ),
             GestureDetector(
               child: Text('Create an Account?'),
-              onTap: navigateToSignUp,
-            )
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => SignUp()));
+              },
+            ),
           ],
         ),
       ),

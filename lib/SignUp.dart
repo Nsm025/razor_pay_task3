@@ -1,3 +1,4 @@
+import 'package:authentification/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -15,7 +16,8 @@ class _SignUpState extends State<SignUp> {
   checkAuthentication() async {
     _auth.authStateChanges().listen((user) async {
       if (user != null) {
-        Navigator.pushReplacementNamed(context, "/");
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     });
   }
@@ -34,9 +36,9 @@ class _SignUpState extends State<SignUp> {
         UserCredential user = await _auth.createUserWithEmailAndPassword(
             email: _email, password: _password);
         if (user != null) {
-          // UserUpdateInfo updateuser = UserUpdateInfo();
+          //  UserUpdateInfo updateuser = UserUpdateInfo();
           // updateuser.displayName = _name;
-          //  user.updateProfile(updateuser);
+          // user.updateProfile(updateuser);
           await _auth.currentUser.updateProfile(displayName: _name);
           // await Navigator.pushReplacementNamed(context,"/") ;
 
@@ -56,6 +58,7 @@ class _SignUpState extends State<SignUp> {
             title: Text('ERROR'),
             content: Text(errormessage),
             actions: <Widget>[
+              // ignore: deprecated_member_use
               FlatButton(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -87,6 +90,7 @@ class _SignUpState extends State<SignUp> {
                   children: <Widget>[
                     Container(
                       child: TextFormField(
+                          // ignore: missing_return
                           validator: (input) {
                             if (input.isEmpty) return 'Enter Name';
                           },
@@ -98,6 +102,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     Container(
                       child: TextFormField(
+                          // ignore: missing_return
                           validator: (input) {
                             if (input.isEmpty) return 'Enter Email';
                           },
@@ -108,6 +113,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     Container(
                       child: TextFormField(
+                          // ignore: missing_return
                           validator: (input) {
                             if (input.length < 6)
                               return 'Provide Minimum 6 Character';
@@ -120,6 +126,7 @@ class _SignUpState extends State<SignUp> {
                           onSaved: (input) => _password = input),
                     ),
                     SizedBox(height: 20),
+                    // ignore: deprecated_member_use
                     RaisedButton(
                       padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
                       onPressed: signUp,
