@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       //   "Login": (BuildContext context) => Login(),
       //   "SignUp": (BuildContext context) => SignUp(),
       //   "start": (BuildContext context) => Start(),
-      // },
+      //},
     );
   }
 }
